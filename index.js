@@ -18,6 +18,18 @@ app.get('/', (req, res) => {
     res.render("index.ejs");
 });
 
+app.post('/add', async (req, res) => {
+    
+});
+
+app.post('/edit', async (req, res) => {
+    
+});
+
+app.get('/delete', async (req, res) => {
+    
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
