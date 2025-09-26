@@ -2,7 +2,39 @@ html {
     background-color: black;
 }
 
-h1, h2, p {
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.item {
+    width: 50rem;
+}
+
+.book {
+    display: flex;
+    margin-bottom: 4rem;
+}
+
+.book-content {
+    margin-left: 2rem;
+}
+
+hr {
+    color: white;
+    width: 50rem;
+    margin-bottom: 4rem;
+}
+
+h1 {
+    color: white;
+    font-size: 3rem;
+    margin: 0;
+}
+
+h2 {
     color: white;
 }
 
