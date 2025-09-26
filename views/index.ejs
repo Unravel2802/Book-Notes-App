@@ -1,14 +1,43 @@
 <%- include("partials/header.ejs"); -%>
-    <div class = "name-header">
+    <div class = "item name-header">
         <h1> Hoang Ly </h1>
     </div>
 
-    <div class = "header">
+    <div class = "item header">
         <h2> Books I've read </h2>
     </div>
 
-    <div class = "page-summary">
+    <div class = "item page-summary">
         <p>Tiny summary but detailed notes for each. Use the ISBN number to find it from your local library or anywhere else. This page will constantly update as I read more, so bookmark it if you want to check back in a few months.</p>
         <p>Sorted with my top recommendations up top. Sort by title, newest, or best.</p>
     </div>
+
+    <hr>
+    
+    <% for (let book of books) { %>
+    <div class = "item book">
+        <div class = "book-cover">
+            <img src="/images/book-cover.jpeg" width="150px" height="225px">
+        </div>
+        
+        <div class = "book-content"> 
+            <div class = "book-title">
+                <h1> <%= book.title %> </h1>
+            </div>
+            
+            <div class = "book-date">
+                <p> <%= book.date %> </p>
+            </div>
+
+            <div class = "book-note">
+                <p> <%= book.note %> </p>
+            </div>
+        </div>
+
+    </div>
+    <% } %>
+
+
+
+
 <%- include("partials/footer.ejs"); -%>
