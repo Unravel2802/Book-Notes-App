@@ -31,6 +31,7 @@ let books = [
     title: "Deep Work",
     author: "Cal Newport",
     note: "Newport argues that deep, focused work is becoming rare in our distracted age, but also increasingly valuable. He defines “deep work” vs “shallow work,” and offers strategies to cultivate focus: schedule blocks of deep work, quit low-value distractions (like unnecessary social media), and embrace boredom instead of filling every gap with stimuli. Key idea: deep work isn’t about willpower — it’s about creating rituals and structures that make concentration easier.",
+    isbn: "9781455586691",
     date: "2024-06-12",
   },
 ];
