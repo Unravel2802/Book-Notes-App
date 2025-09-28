@@ -79,8 +79,14 @@ let books = [
 
 app.get('/', async (req, res) => {
     try {
-        const result = await db.query("SELECT * FROM books");
-        books = result.rows;
+        const result = await db.query("SELECT * FROM books ORDER BY id ASC");
+        books = result.rows.map(b => {
+            const d = new Date(b.read_date);
+            const mm = String(d.getMonth() + 1).padStart(2, "0");
+            const dd = String(d.getDate()).padStart(2, "0");
+            const yyyy = d.getFullYear();
+            return { ...b, read_date: `${mm}/${dd}/${yyyy}` };
+        });
         res.render("index.ejs", 
         {
             books: books,
@@ -92,7 +98,7 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/add', async (req, res) => {
-    const title = req.body.title
+    const title = req.body.title;
     const author = req.body.author;
     const isbn = req.body.isbn;
     const date = req.body.date;
@@ -108,7 +114,22 @@ app.post('/add', async (req, res) => {
 });
 
 app.post('/edit', async (req, res) => {
-    
+    const id = req.body.updatedBookId;
+    const title = req.body.updatedBookTitle;
+    const author = req.body.updatedBookAuthor;
+    const isbn = req.body.updatedBookIsbn;
+    const date = req.body.updatedBookDate;
+    const note = req.body.updatedBookNote;
+
+    try {
+        await db.query(
+            "UPDATE books set title = $1, author = $2, isbn = $3, read_date = $4, note = $5 where id = $6",
+            [title, author, isbn, date, note, id]
+        )
+        res.redirect('/')
+    } catch (err) {
+        console.log(err)
+    }
 });
 
 app.get('/delete', async (req, res) => {
