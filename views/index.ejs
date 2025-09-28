@@ -51,7 +51,7 @@
             <label for="note"> Notes </label>
             <textarea id="note" name="note" rows="4" placeholder="Your notes from reading this book"></textarea>
         </div>
-
+        
         <div class="actions">
             <button class="btn-add" type="submit"> Add </button>
         </div>
@@ -59,29 +59,86 @@
 </div>
 
 <% for (let book of books) { %>
-<div class="item book">
-  <div class="book-cover">
-    <img
-      src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg"
-      width="150px"
-      height="225px"
-    />
+  <div class="item book">
+    <div class="book-cover">
+      <img
+        src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg"
+        width="150"
+        height="225"
+        alt="<%= book.title %> cover"
+      />
+    </div>
+
+    <div class="book-content">
+      <!-- READ-ONLY VIEW -->
+      <div id="ro-<%= book.id %>">
+        <h1><%= book.title %></h1>
+        <p><strong>Author:</strong> <%= book.author %></p>
+        <p><strong>ISBN:</strong> <%= book.isbn %></p>
+        <p><strong>Date:</strong> <%= book.read_date %></p>
+        <p><strong>Notes:</strong> <%= book.note %></p>
+      </div>
+
+      <!-- EDIT FORM (HIDDEN INITIALLY) -->
+      <form id="form-<%= book.id %>" class="edit" action="/edit" method="post" hidden>
+        <input type="hidden" name="updatedBookId" value="<%= book.id %>" />
+
+        <div class="field">
+          <label for="title-<%= book.id %>">Title</label>
+          <input id="title-<%= book.id %>" type="text" name="updatedBookTitle" value="<%- book.title %>" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="author-<%= book.id %>">Author</label>
+          <input id="author-<%= book.id %>" type="text" name="updatedBookAuthor" value="<%- book.author %>" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="isbn-<%= book.id %>">ISBN</label>
+          <input id="isbn-<%= book.id %>" type="text" name="updatedBookIsbn" value="<%- book.isbn %>" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="date-<%= book.id %>">Date</label>
+          <input id="date-<%= book.id %>" type="text" name="updatedBookDate" value="<%- book.read_date %>" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="note-<%= book.id %>">Notes</label>
+          <textarea id="note-<%= book.id %>" name="updatedBookNote" rows="3"><%= book.note %></textarea>
+        </div>
+
+        <button id="done-<%= book.id %>" type="submit">Done</button>
+        <button type="button" onclick="cancelEdit('<%= book.id %>')">Cancel</button>
+      </form>
+
+      <!-- ACTIONS -->
+      <div class="book-actions">
+        <button id="edit-<%= book.id %>" class="edit" type="button" onclick="startEdit('<%= book.id %>')">Edit</button>
+
+        <form action="/books/<%= book.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this book?');">
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
   </div>
+<% } %>
 
-  <div class="book-content">
-    <div class="book-title">
-      <h1><%= book.title %></h1>
-    </div>
+<script>
+  function startEdit(id) {
+    document.getElementById('ro-' + id).hidden = true;
+    document.getElementById('edit-' + id).hidden = true;
+    document.getElementById('form-' + id).hidden = false;
+    // Optional: focus first input
+    const first = document.querySelector('#form-' + id + ' input, #form-' + id + ' textarea');
+    if (first) first.focus();
+  }
 
-    <div class="book-date">
-      <p><%= book.date %></p>
-    </div>
-
-    <div class="book-note">
-      <p><%= book.note %></p>
-    </div>
-  </div>
-</div>
-<% } %> 
+  function cancelEdit(id) {
+    document.getElementById('form-' + id).hidden = true;
+    document.getElementById('ro-' + id).hidden = false;
+    document.getElementById('edit-' + id).hidden = false;
+  }
+</script>
 
 <%- include("partials/footer.ejs"); -%>
