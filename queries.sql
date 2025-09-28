@@ -8,7 +8,17 @@ CREATE TABLE books (
   note TEXT
 );
 
+-- View book query
+SELECT * FROM books ORDER BY id ASC
+
+-- Add book query
 INSERT INTO books (title, author, isbn, read_date, note) VALUES
 ('Atomic Habits', 'James Clear', '9780735211292', '2024-08-01',
  'A practical, psychology-driven guide to how small habits compound into big results. Clear breaks down the “habit loop” (cue, craving, response, reward) and shows how to design environments that make good habits easy and bad habits harder. His ideas on habit stacking and identity-based change are especially memorable — focus less on goals, more on systems and becoming the type of person you want to be.'
 );
+
+-- Edit book query
+UPDATE books set title = $1, author = $2, isbn = $3, read_date = $4, note = $5 where id = $6
+
+-- Delete book query
+DELETE FROM books WHERE id = $1
