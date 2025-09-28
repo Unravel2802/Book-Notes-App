@@ -1,43 +1,87 @@
 <%- include("partials/header.ejs"); -%>
-    <div class = "item name-header">
-        <h1> Hoang Ly </h1>
+
+<div class="item name-header">
+  <h1>Hoang Ly</h1>
+</div>
+
+<div class="item header">
+  <h2>Books I've read</h2>
+</div>
+
+<div class="item page-summary">
+  <p>
+    Tiny summary but detailed notes for each. Use the ISBN number to find it
+    from your local library or anywhere else. This page will constantly update
+    as I read more, so bookmark it if you want to check back in a few months.
+  </p>
+  <p>
+    Sorted with my top recommendations up top. Sort by title, newest, or best.
+  </p>
+</div>
+
+<hr />
+<div class="form-card">
+    <div class="form-card__header">
+        <h3> Add a book </h3>
+        <p class="sub"> Short summary + your notes. ISBN for book cover </p>
     </div>
 
-    <div class = "item header">
-        <h2> Books I've read </h2>
-    </div>
-
-    <div class = "item page-summary">
-        <p>Tiny summary but detailed notes for each. Use the ISBN number to find it from your local library or anywhere else. This page will constantly update as I read more, so bookmark it if you want to check back in a few months.</p>
-        <p>Sorted with my top recommendations up top. Sort by title, newest, or best.</p>
-    </div>
-
-    <hr>
-    
-    <% for (let book of books) { %>
-    <div class = "item book">
-        <div class = "book-cover">
-            <img src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg" width="150px" height="225px"/>
-        </div>
-        
-        <div class = "book-content"> 
-            <div class = "book-title">
-                <h1> <%= book.title %> </h1>
-            </div>
-            
-            <div class = "book-date">
-                <p> <%= book.date %> </p>
-            </div>
-
-            <div class = "book-note">
-                <p> <%= book.note %> </p>
-            </div>
+    <form class="form-grid" action="/add" method="post">
+        <div class="field">
+            <label for="title"> Title</label>
+            <input type="text" id="title" name="title" placeholder="Book title" required />
         </div>
 
+        <div class="field"> 
+            <label for="author"> Author </label>
+            <input type="text" id="author" name="author" placeholder="Book Author" required />
+        </div>
+
+        <div class="field">
+            <label for="isbn"> ISBN </label>
+            <input type="text" id="isbn" name="isbn" placeholder="Book ISBN" required />
+        </div>
+
+        <div class="field">
+            <label for="date"> Date </label>
+            <input type="text" id="date" name="date" placeholder="Date"/>
+        </div>
+
+        <div class="field field--notes">
+            <label for="note"> Notes </label>
+            <textarea id="note" name="note" rows="4" placeholder="Your notes from reading this book"></textarea>
+        </div>
+
+        <div class="actions">
+            <button class="btn-add" type="submit"> Add </button>
+        </div>
+    </form>
+</div>
+
+<% for (let book of books) { %>
+<div class="item book">
+  <div class="book-cover">
+    <img
+      src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg"
+      width="150px"
+      height="225px"
+    />
+  </div>
+
+  <div class="book-content">
+    <div class="book-title">
+      <h1><%= book.title %></h1>
     </div>
-    <% } %>
 
+    <div class="book-date">
+      <p><%= book.date %></p>
+    </div>
 
-
+    <div class="book-note">
+      <p><%= book.note %></p>
+    </div>
+  </div>
+</div>
+<% } %> 
 
 <%- include("partials/footer.ejs"); -%>
