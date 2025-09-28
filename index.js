@@ -77,12 +77,18 @@ let books = [
 ];
 
 
-app.get('/', (req, res) => {
-    res.render("index.ejs", 
+app.get('/', async (req, res) => {
+    try {
+        const result = await db.query("SELECT * FROM books");
+        books = result.rows;
+        res.render("index.ejs", 
         {
             books: books,
         }
     );
+    } catch (err) {
+        console.error(err)
+    }
 });
 
 app.post('/add', async (req, res) => {
