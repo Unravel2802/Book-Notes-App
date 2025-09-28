@@ -132,8 +132,16 @@ app.post('/edit', async (req, res) => {
     }
 });
 
-app.get('/delete', async (req, res) => {
-    
+app.post('/delete', async (req, res) => {
+    const id = req.body.deleteBookId;
+    try {
+        await db.query (
+            "DELETE FROM books WHERE id = $1", [id]
+        )
+        res.redirect('/')
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 app.listen(port, () => {
